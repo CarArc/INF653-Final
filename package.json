@@ -1,0 +1,21 @@
+{
+  "name": "final",
+  "version": "1.0.0",
+  "description": "INF653 final states REST API",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "seed": "node seedFunfacts.js",
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.2"
+  }
+}
