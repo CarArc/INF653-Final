@@ -7,6 +7,10 @@ if (!cached) {
 }
 
 const connectDB = async () => {
+  if (!process.env.DATABASE_URI) {
+    throw new Error("DATABASE_URI is not set.");
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
