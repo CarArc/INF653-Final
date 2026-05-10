@@ -1,4 +1,5 @@
 # INF653 Final - States REST API
+Amir P Deilami
 
 ## Setup
 1. Install dependencies:
