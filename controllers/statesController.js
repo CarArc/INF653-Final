@@ -1,6 +1,10 @@
 const State = require("../models/States");
 const statesData = require("../models/statesData.json");
 
+const asyncHandler = (fn) => (req, res, next) => {
+  Promise.resolve(fn(req, res, next)).catch(next);
+};
+
 const getStateFromData = (stateCode) =>
   statesData.find((state) => state.code === stateCode);
 
@@ -27,7 +31,7 @@ const getStateCollection = async () => {
   return statesData.map((state) => mergeFunfacts(state, docsByCode.get(state.code)));
 };
 
-const getAllStates = async (req, res) => {
+const getAllStates = asyncHandler(async (req, res) => {
   const allStates = await getStateCollection();
   const { contig } = req.query;
 
@@ -40,14 +44,14 @@ const getAllStates = async (req, res) => {
   }
 
   return res.json(allStates);
-};
+});
 
-const getState = async (req, res) => {
+const getState = asyncHandler(async (req, res) => {
   const mergedState = await getStateByCode(req.code);
   return res.json(mergedState);
-};
+});
 
-const getRandomFunfact = async (req, res) => {
+const getRandomFunfact = asyncHandler(async (req, res) => {
   const mergedState = await getStateByCode(req.code);
 
   if (!Array.isArray(mergedState.funfacts) || mergedState.funfacts.length === 0) {
@@ -58,7 +62,7 @@ const getRandomFunfact = async (req, res) => {
 
   const randomIndex = Math.floor(Math.random() * mergedState.funfacts.length);
   return res.json({ funfact: mergedState.funfacts[randomIndex] });
-};
+});
 
 const getCapital = (req, res) => {
   const state = getStateFromData(req.code);
@@ -83,7 +87,7 @@ const getAdmission = (req, res) => {
   return res.json({ state: state.state, admitted: state.admission_date });
 };
 
-const createFunfacts = async (req, res) => {
+const createFunfacts = asyncHandler(async (req, res) => {
   const { funfacts } = req.body;
 
   if (!funfacts) {
@@ -104,9 +108,9 @@ const createFunfacts = async (req, res) => {
 
   const result = await State.create({ stateCode: req.code, funfacts });
   return res.json(result);
-};
+});
 
-const updateFunfact = async (req, res) => {
+const updateFunfact = asyncHandler(async (req, res) => {
   const { index, funfact } = req.body;
 
   if (!index) {
@@ -138,9 +142,9 @@ const updateFunfact = async (req, res) => {
   stateDoc.funfacts[indexToUpdate] = funfact;
   const result = await stateDoc.save();
   return res.json(result);
-};
+});
 
-const deleteFunfact = async (req, res) => {
+const deleteFunfact = asyncHandler(async (req, res) => {
   const { index } = req.body;
 
   if (!index) {
@@ -168,7 +172,7 @@ const deleteFunfact = async (req, res) => {
   stateDoc.funfacts.splice(indexToDelete, 1);
   const result = await stateDoc.save();
   return res.json(result);
-};
+});
 
 module.exports = {
   getAllStates,
