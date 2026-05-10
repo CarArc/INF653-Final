@@ -5,10 +5,7 @@ const connectDB = require("../config/dbConn");
 
 module.exports = async (req, res) => {
   try {
-    if (req.url.startsWith("/states")) {
-      await connectDB();
-    }
-
+    await connectDB();
     return app(req, res);
   } catch (err) {
     console.error("Serverless DB connection error:", err.message);
