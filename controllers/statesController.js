@@ -9,7 +9,7 @@ const getStateFromData = (stateCode) =>
   statesData.find((state) => state.code === stateCode);
 
 const mergeFunfacts = (state, stateDoc) => {
-  if (!stateDoc || !Array.isArray(stateDoc.funfacts) || stateDoc.funfacts.length === 0) {
+  if (!stateDoc || !Array.isArray(stateDoc.funfacts)) {
     return { ...state };
   }
 

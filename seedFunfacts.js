@@ -32,6 +32,8 @@ const requiredFunfacts = {
   ],
 };
 
+const emptyFunfactStates = ["NH", "RI", "GA", "AZ", "MT"];
+
 const seed = async () => {
   if (!process.env.DATABASE_URI || process.env.DATABASE_URI.includes("username:password")) {
     throw new Error("Set a valid DATABASE_URI in .env before running the seed script.");
@@ -47,7 +49,15 @@ const seed = async () => {
     );
   }
 
-  console.log("Seed complete for KS, MO, OK, NE, and CO.");
+  for (const stateCode of emptyFunfactStates) {
+    await State.findOneAndUpdate(
+      { stateCode },
+      { $setOnInsert: { funfacts: [] } },
+      { upsert: true, returnDocument: "after" }
+    );
+  }
+
+  console.log("Seed complete for KS, MO, OK, NE, CO and empty docs for NH, RI, GA, AZ, MT.");
   await mongoose.connection.close();
 };
 
