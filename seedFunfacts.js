@@ -32,7 +32,7 @@ const requiredFunfacts = {
   ],
 };
 
-const emptyFunfactStates = ["NH", "RI", "GA", "AZ", "MT"];
+const emptyFunfactStates = ["RI"];
 
 const seed = async () => {
   if (!process.env.DATABASE_URI || process.env.DATABASE_URI.includes("username:password")) {
@@ -57,7 +57,7 @@ const seed = async () => {
     );
   }
 
-  console.log("Seed complete for KS, MO, OK, NE, CO and empty docs for NH, RI, GA, AZ, MT.");
+  console.log("Seed complete for KS, MO, OK, NE, CO and empty doc for RI.");
   await mongoose.connection.close();
 };
 

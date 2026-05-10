@@ -8,7 +8,18 @@ const asyncHandler = (fn) => (req, res, next) => {
 const getStateFromData = (stateCode) =>
   statesData.find((state) => state.code === stateCode);
 
-const mergeFunfacts = (state, stateDoc) => {
+const mergeFunfactsForList = (state, stateDoc) => {
+  if (!stateDoc || !Array.isArray(stateDoc.funfacts) || stateDoc.funfacts.length === 0) {
+    return { ...state };
+  }
+
+  return {
+    ...state,
+    funfacts: [...stateDoc.funfacts],
+  };
+};
+
+const mergeFunfactsForSingle = (state, stateDoc) => {
   if (!stateDoc || !Array.isArray(stateDoc.funfacts)) {
     return { ...state };
   }
@@ -22,13 +33,13 @@ const mergeFunfacts = (state, stateDoc) => {
 const getStateByCode = async (stateCode) => {
   const baseState = getStateFromData(stateCode);
   const stateDoc = await State.findOne({ stateCode }).lean();
-  return mergeFunfacts(baseState, stateDoc);
+  return mergeFunfactsForSingle(baseState, stateDoc);
 };
 
 const getStateCollection = async () => {
   const stateDocs = await State.find().lean();
   const docsByCode = new Map(stateDocs.map((doc) => [doc.stateCode, doc]));
-  return statesData.map((state) => mergeFunfacts(state, docsByCode.get(state.code)));
+  return statesData.map((state) => mergeFunfactsForList(state, docsByCode.get(state.code)));
 };
 
 const getAllStates = asyncHandler(async (req, res) => {

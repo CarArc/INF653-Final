@@ -30,13 +30,7 @@ This seeds at least 3 fun facts each for:
 - `NE`
 - `CO`
 
-It also creates empty `funfacts: []` documents for the do-not-add states so the API can return an empty `funfacts` array as required by the grader:
-
-- `NH`
-- `RI`
-- `GA`
-- `AZ`
-- `MT`
+It also creates an empty `funfacts: []` document for `RI` so the single-state endpoint can return the expected empty array for that state.
 
 ## API Base Routes
 
