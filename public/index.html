@@ -25,6 +25,21 @@
         border-radius: 6px;
         overflow-x: auto;
       }
+
+      textarea {
+        width: 100%;
+        min-height: 260px;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 0.9rem;
+        padding: 0.75rem;
+        box-sizing: border-box;
+      }
+
+      button {
+        margin-top: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -95,5 +110,43 @@
     <p>
       Run the automated tester against your deployed URL, fix failures, then submit your score.
     </p>
+
+    <h2>Postman Collection (Import)</h2>
+    <p>
+      Quick import file:
+      <a href="/INF653.postman_collection.json" download>INF653.postman_collection.json</a>
+    </p>
+    <p>
+      Or copy the JSON below and use Postman Import -> Raw Text.
+    </p>
+    <textarea id="postmanCollection" readonly>Loading collection JSON...</textarea>
+    <br />
+    <button type="button" id="copyCollectionBtn">Copy JSON</button>
+    <span id="copyStatus"></span>
+
+    <script>
+      (async () => {
+        const textarea = document.getElementById("postmanCollection");
+        const copyBtn = document.getElementById("copyCollectionBtn");
+        const copyStatus = document.getElementById("copyStatus");
+
+        try {
+          const response = await fetch("/INF653.postman_collection.json");
+          const collectionText = await response.text();
+          textarea.value = collectionText;
+        } catch (err) {
+          textarea.value = "Unable to load collection JSON.";
+        }
+
+        copyBtn.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(textarea.value);
+            copyStatus.textContent = " Copied.";
+          } catch (err) {
+            copyStatus.textContent = " Copy failed. Please select and copy manually.";
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

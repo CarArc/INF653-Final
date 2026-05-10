@@ -1,0 +1,271 @@
+{
+  "info": {
+    "name": "INF653 States API",
+    "_postman_id": "d9bb021a-0c54-4a1b-8db3-24bd351f8a10",
+    "description": "Collection for INF653 Final Project required endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://inf-653-final.vercel.app"
+    },
+    {
+      "key": "stateCode",
+      "value": "ks"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET /states/",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /states/?contig=true",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/?contig=true",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            ""
+          ],
+          "query": [
+            {
+              "key": "contig",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /states/?contig=false",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/?contig=false",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            ""
+          ],
+          "query": [
+            {
+              "key": "contig",
+              "value": "false"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /states/:state",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /states/:state/funfact",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}/funfact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}",
+            "funfact"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /states/:state/capital",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}/capital",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}",
+            "capital"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /states/:state/nickname",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}/nickname",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}",
+            "nickname"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /states/:state/population",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}/population",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}",
+            "population"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /states/:state/admission",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}/admission",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}",
+            "admission"
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST /states/:state/funfact",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"funfacts\": [\n    \"Test fact 1\",\n    \"Test fact 2\"\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}/funfact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}",
+            "funfact"
+          ]
+        }
+      }
+    },
+    {
+      "name": "PATCH /states/:state/funfact",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"index\": 1,\n  \"funfact\": \"Updated test fact\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}/funfact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}",
+            "funfact"
+          ]
+        }
+      }
+    },
+    {
+      "name": "DELETE /states/:state/funfact",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"index\": 1\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/states/{{stateCode}}/funfact",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "states",
+            "{{stateCode}}",
+            "funfact"
+          ]
+        }
+      }
+    }
+  ]
+}
