@@ -4,9 +4,96 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>INF653 States API</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.5;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+
+      code {
+        background: #f4f4f4;
+        padding: 0.1rem 0.3rem;
+        border-radius: 4px;
+      }
+
+      pre {
+        background: #f4f4f4;
+        padding: 0.75rem;
+        border-radius: 6px;
+        overflow-x: auto;
+      }
+    </style>
   </head>
   <body>
     <h1>INF653 States API</h1>
     <p>Use <code>/states</code> endpoints to query state data.</p>
+
+    <h2>How to test this API (per project requirements)</h2>
+
+    <h3>1) API base URL</h3>
+    <p>
+      Root page: <code>/</code><br />
+      API root: <code>/states/</code>
+    </p>
+
+    <h3>2) Required GET routes</h3>
+    <ul>
+      <li><code>GET /states/</code> - all states with merged funfacts</li>
+      <li><code>GET /states/?contig=true</code> - contiguous only (not AK, HI)</li>
+      <li><code>GET /states/?contig=false</code> - non-contiguous only (AK, HI)</li>
+      <li><code>GET /states/ks</code> - full state object for Kansas</li>
+      <li><code>GET /states/ks/funfact</code> - random fun fact</li>
+      <li><code>GET /states/ks/capital</code> - state + capital</li>
+      <li><code>GET /states/ks/nickname</code> - state + nickname</li>
+      <li><code>GET /states/ks/population</code> - state + formatted population</li>
+      <li><code>GET /states/ks/admission</code> - state + admission date</li>
+    </ul>
+
+    <h3>3) Required funfact write routes</h3>
+    <p>Set <code>Content-Type: application/json</code> for these requests.</p>
+
+    <p><strong>POST /states/ks/funfact</strong></p>
+    <pre>{
+  "funfacts": ["Test fact 1", "Test fact 2"]
+}</pre>
+
+    <p><strong>PATCH /states/ks/funfact</strong> (index is 1-based)</p>
+    <pre>{
+  "index": 1,
+  "funfact": "Updated fact"
+}</pre>
+
+    <p><strong>DELETE /states/ks/funfact</strong> (index is 1-based)</p>
+    <pre>{
+  "index": 1
+}</pre>
+
+    <h3>4) Required error checks</h3>
+    <ul>
+      <li>
+        <code>GET /states/kansas</code> - should return invalid state abbreviation message
+      </li>
+      <li><code>GET /states/al/funfact</code> - should return no fun facts found message</li>
+      <li>
+        POST/PATCH/DELETE with missing required body properties should return validation messages
+      </li>
+      <li>
+        PATCH/DELETE with out-of-range index (example: <code>99</code>) should return index error
+      </li>
+    </ul>
+
+    <h3>5) Catch-all 404 test</h3>
+    <p>
+      Request any invalid route like <code>/not-a-route</code>. For JSON clients, response should
+      be <code>{ "error": "404 Not Found" }</code>.
+    </p>
+
+    <h3>6) Final submission check</h3>
+    <p>
+      Run the automated tester against your deployed URL, fix failures, then submit your score.
+    </p>
   </body>
 </html>
